@@ -1,3 +1,4 @@
+"use client"; 
 import { signInAction } from "@/app/actions";
 import { FormMessage, Message } from "@/components/form-message";
 import { SubmitButton } from "@/components/submit-button";
@@ -6,9 +7,18 @@ import { Label } from "@/components/ui/label";
 import Link from "next/link";
 
 
-export default async function Login(props: { searchParams: Promise<Message> }) {
-  const searchParams = await props.searchParams;
+import { useEffect, useState } from "react";
 
+export default function Login({ searchParams }) {
+  const [params, setParams] = useState(null);
+
+  useEffect(() => {
+    async function fetchParams() {
+      const data = await searchParams; // Resolve the Promise
+      setParams(data);
+    }
+    fetchParams();
+  }, [searchParams]);
 
 
 
